@@ -1,21 +1,86 @@
 <MainScreen>:
-    MDBoxLayout:
-        orientation: "vertical"
-        padding: "50dp"
+    MDBoxLayout: 
+        orientation: "vertical"     
+        padding: "50dp" 
         spacing: "30dp"
 
-    MDIconButton:
-        icon: "cog"
-        pos_hint: {"right":1, "top": 1}
-        icon_size: "50dp"
+        MDIconButton:
+            icon: "cog"
+            pos_hint: {"right": 1, "top": 1}
+            icon_size: "50dp"
 
-    MDLabel:
-        text: "SHOOTER"
-        haling: "center"
-        font_size: "60sp"
+        MDLabel:
+            text: "SHOOTER"
+            halign: "center"
+            font_size: "60sp"
+
+        Image:
+            source: "assets/images/images.jfif"
+            size_hint_y: 0.7
+            allow_stretch: True
 
 
-    Image
-        sourse: "assets/images/images.jfif"
-        size_hint_y: 0.7
-        allow_strech: True
+        MDButton:
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+            on_press:
+                root.manager.current = "game"
+
+            MDButtonText:
+                text: "PLAY"
+                font_size: "80sp"
+
+
+<Ship@Image>:
+    source: "assets/images/images.jfif"
+    size_hint: None, None
+    size: dp(100), dp(200)
+
+<GameScreen>:
+    FloatLayout:
+        FloatLayout:
+            id: game
+
+            FloatLayout:
+                id: back
+                canvas.before:
+                    Color:
+                        rgba: 0.02, 0.02, 0.08, 1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+
+            FloatLayout:
+                id: front
+                Ship:
+                    id: ship
+                    center_x: root.center_x
+                    y: dp(120)
+
+        FloatLayout:
+            id: interface
+
+            BoxLayout:
+                size_hint: 1, None
+                height: dp(100)
+                padding: dp(20)
+                spacing: dp(20)
+
+                MDIconButton:
+                    icon: "arrow-left-bold"
+                    icon_size: "50dp"
+                    on_press: root.keys["left"] = True
+                    on_release: root.keys["left"] = False
+
+                MDIconButton:
+                    icon: "arrow-right-bold"
+                    icon_size: "50dp"
+                    on_press: root.keys["right"] = True
+                    on_release: root.keys["right"] = False
+
+                Widget:
+                MDIconButton:
+                    icon: "fire"
+                    icon_size: "50dp"
+                    theme_icon_color: "Custom"
+                    icon_color: 1, 0, 0, 1
+                    on_press: root.fire()
